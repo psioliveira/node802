@@ -1,0 +1,52 @@
+{
+    "name": "PlayerControl",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "0b4c6b6b-8376-42da-852a-356ca7c101ee",
+            "actions": [
+                {
+                    "name": "walk",
+                    "type": "Button",
+                    "id": "abab9b90-6c8e-4a4b-a230-c1c01675538b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "jump",
+                    "type": "Button",
+                    "id": "a5dbb3ff-3c82-4796-b062-930c576a1355",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e61de8e7-ffac-4ca1-af4a-660e3a787d2b",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "walk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18955933-5145-4ca3-9f40-5ba193201269",
+                    "path": "<DualShockGamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

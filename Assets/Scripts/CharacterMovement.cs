@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float maxFallVelocity = 120.0f;
 
+    internal Vector2 movement;
+    internal PlayerControl pc;
 
     private PhysicObject _phisicObject;
     private CharacterController _controller;
@@ -35,7 +38,17 @@ public class CharacterMovement : MonoBehaviour
     private float _velocityFactor;
     private bool _jump;
 
+    private void Awake()
+    {
+        pc = new PlayerControl();
+        pc.Gameplay.walk.performed += ctx => movement = ctx.ReadValue<Vector2>();
+        pc.Gameplay.walk.canceled += ctx => movement = Vector2.zero;
 
+        pc.Gameplay.jump.performed += ctx => _jump = _phisicObject.IsOnGround();
+        pc.Gameplay.jump.canceled += ctx => _jump = false;
+
+
+    }
 
     private void Start()
     {
@@ -56,9 +69,7 @@ public class CharacterMovement : MonoBehaviour
     }
 
     private void UpdateJump()
-    {
-        if (_phisicObject.IsOnGround() && Input.GetButtonDown("Jump"))
-            _jump = true;
+    {  
     }
 
 
@@ -72,7 +83,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void UpdateAcceleration()
     {
-        _acceleration.z = Input.GetAxis("Forward");
+        _acceleration.z = movement.x;
         _acceleration.z *= _acceleration.z > 0f ? maxForwardAcceleration * _velocityFactor : maxBackwardAcceleration * _velocityFactor;
 
         if (_phisicObject.ApplyGravity())
@@ -105,5 +116,14 @@ public class CharacterMovement : MonoBehaviour
         _controller.Move(transform.TransformVector(motion));
     }
 
+    private void OnEnable()
+    {
+        pc.Gameplay.Enable();
+    }
+
+    private void OnDisable()
+    {
+        pc.Gameplay.Disable();
+    }
 
 }

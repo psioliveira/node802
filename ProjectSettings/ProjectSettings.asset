@@ -660,6 +660,6 @@ PlayerSettings:
   projectName: node 802
   organizationId: lenoxys1400
   cloudEnabled: 0
-  enableNativePlatformBackendsForNewInputSystem: 0
+  enableNativePlatformBackendsForNewInputSystem: 1
   disableOldInputManagerSupport: 0
   legacyClampBlendShapeWeights: 0
