@@ -156,10 +156,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layer: Ground
-  groundOfset: 0.99
-  groundCheckRadius: 0.09
-  gravityOfset: 1
-  gravityCheckRadius: 0.05
+  groundOfset: 5.03
+  groundCheckRadius: 0.8
+  gravityOfset: 4.75
+  gravityCheckRadius: 0.45
   gravityModifier: 50
 --- !u!143 &296785422
 CharacterController:
@@ -172,7 +172,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.9
+  m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 953042166}
   - component: {fileID: 953042165}
   - component: {fileID: 953042164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6124,7 +6124,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-82796
+  m_Name: pb_Mesh17584
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
