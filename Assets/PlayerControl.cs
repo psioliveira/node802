@@ -33,6 +33,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""fast falling"",
+                    ""type"": ""Button"",
+                    ""id"": ""15e9b881-2cc7-4770-95d9-fb11a45b5a0c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -57,6 +65,17 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47c2090a-04b2-4a13-b0de-d1778f453950"",
+                    ""path"": ""<DualShockGamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""fast falling"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -67,6 +86,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_walk = m_Gameplay.FindAction("walk", throwIfNotFound: true);
         m_Gameplay_jump = m_Gameplay.FindAction("jump", throwIfNotFound: true);
+        m_Gameplay_fastfalling = m_Gameplay.FindAction("fast falling", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +138,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_walk;
     private readonly InputAction m_Gameplay_jump;
+    private readonly InputAction m_Gameplay_fastfalling;
     public struct GameplayActions
     {
         private @PlayerControl m_Wrapper;
         public GameplayActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @walk => m_Wrapper.m_Gameplay_walk;
         public InputAction @jump => m_Wrapper.m_Gameplay_jump;
+        public InputAction @fastfalling => m_Wrapper.m_Gameplay_fastfalling;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -139,6 +161,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                @fastfalling.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
+                @fastfalling.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
+                @fastfalling.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -149,6 +174,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @jump.started += instance.OnJump;
                 @jump.performed += instance.OnJump;
                 @jump.canceled += instance.OnJump;
+                @fastfalling.started += instance.OnFastfalling;
+                @fastfalling.performed += instance.OnFastfalling;
+                @fastfalling.canceled += instance.OnFastfalling;
             }
         }
     }
@@ -157,5 +185,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnFastfalling(InputAction.CallbackContext context);
     }
 }

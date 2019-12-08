@@ -37,6 +37,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float _velocityFactor;
     private bool _jump;
+    private bool _fastfall;
 
     private void Awake()
     {
@@ -47,6 +48,8 @@ public class CharacterMovement : MonoBehaviour
         pc.Gameplay.jump.performed += ctx => _jump = _phisicObject.IsOnGround();
         pc.Gameplay.jump.canceled += ctx => _jump = false;
 
+        pc.Gameplay.fastfalling.performed += ctx => _fastfall = !_phisicObject.IsOnGround();
+        pc.Gameplay.fastfalling.canceled += ctx => _fastfall = false;
 
     }
 
@@ -62,14 +65,8 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        UpdateJump();
         Debug.Log("gounded " + _phisicObject.IsOnGround());
         Debug.Log("gravity " + _phisicObject.ApplyGravity());
-
-    }
-
-    private void UpdateJump()
-    {  
     }
 
 

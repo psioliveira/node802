@@ -70,25 +70,18 @@ public class PhysicObject : MonoBehaviour
         //        break;
         //}
     }
-
-
     internal bool IsOnGround()
     {
         Vector3 pos = new Vector3(transform.position.x, transform.position.y - groundOfset, transform.position.z);
         Collider[] col = Physics.OverlapSphere(pos, groundCheckRadius, LayerMask.GetMask(layer));
         return (col.Length > 0 && col != null);
     }
-
-
     internal bool ApplyGravity()
     {
         Vector3 pos = new Vector3(transform.position.x, transform.position.y - gravityOfset, transform.position.z);
         Collider[] col = Physics.OverlapSphere(pos, gravityCheckRadius, LayerMask.GetMask(layer));
         return (col.Length > 0 && col != null);
     }
-
-
-
     private void OnDrawGizmosSelected()
     {
         Vector3 pos1 = new Vector3(transform.position.x, transform.position.y - groundOfset, transform.position.z);
