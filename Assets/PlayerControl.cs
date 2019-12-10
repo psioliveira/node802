@@ -41,6 +41,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f8c29da-5569-4233-b4e5-4dd8a079e486"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -68,12 +76,23 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""47c2090a-04b2-4a13-b0de-d1778f453950"",
+                    ""id"": ""033d9c9b-1ed9-4a74-8a31-95c17705fd05"",
                     ""path"": ""<DualShockGamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""fast falling"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9887a51c-0990-444d-9056-0464f4cfddc7"",
+                    ""path"": ""<DualShockGamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -87,6 +106,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Gameplay_walk = m_Gameplay.FindAction("walk", throwIfNotFound: true);
         m_Gameplay_jump = m_Gameplay.FindAction("jump", throwIfNotFound: true);
         m_Gameplay_fastfalling = m_Gameplay.FindAction("fast falling", throwIfNotFound: true);
+        m_Gameplay_shoot = m_Gameplay.FindAction("shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -139,6 +159,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_walk;
     private readonly InputAction m_Gameplay_jump;
     private readonly InputAction m_Gameplay_fastfalling;
+    private readonly InputAction m_Gameplay_shoot;
     public struct GameplayActions
     {
         private @PlayerControl m_Wrapper;
@@ -146,6 +167,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @walk => m_Wrapper.m_Gameplay_walk;
         public InputAction @jump => m_Wrapper.m_Gameplay_jump;
         public InputAction @fastfalling => m_Wrapper.m_Gameplay_fastfalling;
+        public InputAction @shoot => m_Wrapper.m_Gameplay_shoot;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -164,6 +186,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @fastfalling.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
                 @fastfalling.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
                 @fastfalling.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
+                @shoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
+                @shoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
+                @shoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -177,6 +202,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @fastfalling.started += instance.OnFastfalling;
                 @fastfalling.performed += instance.OnFastfalling;
                 @fastfalling.canceled += instance.OnFastfalling;
+                @shoot.started += instance.OnShoot;
+                @shoot.performed += instance.OnShoot;
+                @shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -186,5 +214,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnWalk(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnFastfalling(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }
