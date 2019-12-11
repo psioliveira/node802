@@ -45,8 +45,8 @@ public class PhysicObject : MonoBehaviour
 
     internal GameObject GetPlatform()
     {
-        Vector3 pos = new Vector3(transform.position.x, transform.position.y - groundOfset, transform.position.z);
-        Collider[] col = Physics.OverlapSphere(pos, groundCheckRadius, LayerMask.GetMask("pass through"));
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y - platformOfset, transform.position.z);
+        Collider[] col = Physics.OverlapSphere(pos, platformCheckRadius, LayerMask.GetMask("pass through"));
         return col[0].gameObject;
     }
 
@@ -72,11 +72,11 @@ public class PhysicObject : MonoBehaviour
 
         Vector3 pos2 = new Vector3(transform.position.x, transform.position.y - platformOfset, transform.position.z);
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(pos2, groundCheckRadius);
+        Gizmos.DrawSphere(pos2, platformCheckRadius);
 
         Vector3 pos3 = new Vector3(transform.position.x, transform.position.y - playerHeadOfset, transform.position.z);
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(pos3, groundCheckRadius);
+        Gizmos.DrawSphere(pos3, headCheckRadius);
 
     }
 }
