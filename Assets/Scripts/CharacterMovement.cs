@@ -7,16 +7,42 @@ public class CharacterMovement : MonoBehaviour
 {
 
     [SerializeField]
+    private UI_Player_Manager ui;
+    [SerializeField]
     private float jumpAcceleration = 25.0f;
     internal Vector2 movement;
+    [SerializeField]
     internal PlayerControl pc;
+    [SerializeField]
     private PhysicObject _phisicObject;
+    [SerializeField]
     private Rigidbody _rigidbody;
     [SerializeField]
     private float accelerationFactor = 1f;
-    private bool _jump;
-    private bool _fastfall;
-    private bool _pass;
+
+    private bool _jump = false;
+    private bool _fastfall = false;
+    private bool _shoot = false;
+
+
+    [SerializeField]
+    private Transform explosionPosition;
+    [SerializeField]
+    private float knockbackForce;
+    [SerializeField]
+    private float explosionRadius;
+    [SerializeField]
+    private float heightModifier;
+
+    private float cooldownTimer = 2;
+    private float cooldownCurrent = 0;
+    private bool cooldownReached = false;
+    private int shootCount = 0;
+
+    private bool reloading = false;
+    private float reloadColdownTimer = 2;
+    private float reloadCooldownCurrent = 0;
+
 
     private void Awake()
     {
@@ -30,8 +56,11 @@ public class CharacterMovement : MonoBehaviour
         pc.Gameplay.fastfalling.performed += ctx => _fastfall = (!_phisicObject.IsOnGround() || !_phisicObject.IsOnPassPlatform());
         pc.Gameplay.fastfalling.canceled += ctx => _fastfall = false;
 
-        pc.Gameplay.passthrough.performed += ctx => _pass = _phisicObject.IsOnPassPlatform();
-        pc.Gameplay.fastfalling.canceled += ctx => _pass = false;
+        pc.Gameplay.reload.performed += ctx => shootCount = 3;
+
+        pc.Gameplay.shoot.performed += ctx => _shoot = true;
+        pc.Gameplay.shoot.canceled += ctx => _shoot = false;
+
 
     }
 
@@ -39,36 +68,86 @@ public class CharacterMovement : MonoBehaviour
     {
         _phisicObject = GetComponent<PhysicObject>();
         _rigidbody = GetComponent<Rigidbody>();
-        _jump = false;
+    }
+
+    private void Update()
+    {
+        if (!cooldownReached)
+        {
+            cooldownCurrent += Time.deltaTime;
+            if (cooldownCurrent >= cooldownTimer)
+            {
+                cooldownReached = true;
+            }
+        }
+
+        if (reloading == true)
+        {
+            reloadCooldownCurrent += Time.deltaTime;
+            if (reloadCooldownCurrent >= reloadColdownTimer)
+            {
+                reloading = false;
+            }
+        }
+
+        if (shootCount >= 3)
+        {
+            shootCount = 0;
+            reloading = true;
+            ui.ReloadShell(reloadColdownTimer);
+        }
+
     }
 
     void FixedUpdate()
     {
+        UpdateKnockback();
         UpdateAcceleration();
         UpdatePosition();
-        UpdatePassThrough();
     }
+
+
     private void UpdateAcceleration()
     {
-        if (_jump && _phisicObject.IsOnGround())
+        if (_jump)
         {
             _rigidbody.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse);
             _jump = false;
         }
 
-    }
-
-    private void UpdatePassThrough()
-    {
-        if (_phisicObject.playerHeadInside())
-        { Physics.IgnoreCollision(this.GetComponent<Collider>(), _phisicObject.GetPlatform().GetComponent<Collider>(), false); }
-
-        if (_pass && _phisicObject.IsOnPassPlatform())
+        if (!_phisicObject.IsOnGround())
         {
-            Physics.IgnoreCollision(this.GetComponent<Collider>(), _phisicObject.GetPlatform().GetComponent<Collider>(), true);
-            _pass = false;
+            if (_fastfall)
+            {
+                _rigidbody.AddForce(Vector3.up * -jumpAcceleration*20f, ForceMode.Impulse);
+                _fastfall = false;
+            }
         }
+
     }
+
+
+    private void UpdateKnockback()
+    {
+        if (cooldownReached && !reloading)
+        {
+            if (_shoot)
+            {
+                ui.UseShell();
+                shootCount += 1;
+                cooldownReached = false;
+                cooldownCurrent = 0f;
+                Vector3 _explosionPosition = this.explosionPosition.position;
+                Debug.Log("explosion");
+                _rigidbody.AddExplosionForce(knockbackForce * 10000, _explosionPosition, explosionRadius, heightModifier);
+                _shoot = false;
+
+            }
+        }
+
+    }
+
+
 
     private void UpdatePosition()
     {

@@ -11,19 +11,19 @@ public class PhysicObject : MonoBehaviour
     [SerializeField]
     private string layer = "Ground";
     [SerializeField]
-    private float gravityFactor = 1;
+    private float gravityFactor = 1.5f;
     [SerializeField]
-    internal float groundOfset = 0;
+    internal float groundOfset = 3.55f;
     [SerializeField]
-    internal float groundCheckRadius = 0.5f;
+    internal float groundCheckRadius = 2f;
     [SerializeField]
-    private float platformOfset = 0;
+    private float platformOfset = 5.18f;
     [SerializeField]
-    internal float playerHeadOfset = 0;
+    internal float playerHeadOfset = -3.33f;
     [SerializeField]
-    private float platformCheckRadius = 0;
+    private float platformCheckRadius = 0.66f;
     [SerializeField]
-    private float headCheckRadius = 0;
+    private float headCheckRadius = 2.1f;
 
     private void Start()
     {
@@ -47,7 +47,11 @@ public class PhysicObject : MonoBehaviour
     {
         Vector3 pos = new Vector3(transform.position.x, transform.position.y - platformOfset, transform.position.z);
         Collider[] col = Physics.OverlapSphere(pos, platformCheckRadius, LayerMask.GetMask("pass through"));
-        return col[0].gameObject;
+        if (col.Length == 0)
+        { return null; }
+        else
+        { return col[0].gameObject; }
+
     }
 
     internal bool IsOnPassPlatform()

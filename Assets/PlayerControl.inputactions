@@ -52,6 +52,22 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "reload",
+                    "type": "Button",
+                    "id": "5820fc7a-36d3-4b96-868b-c6b67de51286",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "crouch",
+                    "type": "Button",
+                    "id": "d5c7ef37-c7b7-45a2-a270-eb02460071da",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -69,7 +85,7 @@
                 {
                     "name": "",
                     "id": "18955933-5145-4ca3-9f40-5ba193201269",
-                    "path": "<DualShockGamepad>/buttonSouth",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -80,7 +96,7 @@
                 {
                     "name": "",
                     "id": "033d9c9b-1ed9-4a74-8a31-95c17705fd05",
-                    "path": "<DualShockGamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -91,7 +107,7 @@
                 {
                     "name": "",
                     "id": "9887a51c-0990-444d-9056-0464f4cfddc7",
-                    "path": "<DualShockGamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -102,7 +118,7 @@
                 {
                     "name": "",
                     "id": "ce19452a-de50-4294-9ea7-6291bef459a2",
-                    "path": "<DualShockGamepad>/buttonEast",
+                    "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -118,6 +134,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4fce5f81-11dc-4a51-9e48-027b8800f566",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7eb418e1-fe69-4430-b9d6-eea2ba642260",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

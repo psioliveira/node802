@@ -65,6 +65,22 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""5820fc7a-36d3-4b96-868b-c6b67de51286"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5c7ef37-c7b7-45a2-a270-eb02460071da"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -82,7 +98,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""18955933-5145-4ca3-9f40-5ba193201269"",
-                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -93,7 +109,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""033d9c9b-1ed9-4a74-8a31-95c17705fd05"",
-                    ""path"": ""<DualShockGamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -104,7 +120,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9887a51c-0990-444d-9056-0464f4cfddc7"",
-                    ""path"": ""<DualShockGamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -115,7 +131,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ce19452a-de50-4294-9ea7-6291bef459a2"",
-                    ""path"": ""<DualShockGamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -133,6 +149,28 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4fce5f81-11dc-4a51-9e48-027b8800f566"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7eb418e1-fe69-4430-b9d6-eea2ba642260"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -147,6 +185,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Gameplay_fastfalling = m_Gameplay.FindAction("fast falling", throwIfNotFound: true);
         m_Gameplay_shoot = m_Gameplay.FindAction("shoot", throwIfNotFound: true);
         m_Gameplay_passthrough = m_Gameplay.FindAction("pass through", throwIfNotFound: true);
+        m_Gameplay_reload = m_Gameplay.FindAction("reload", throwIfNotFound: true);
+        m_Gameplay_crouch = m_Gameplay.FindAction("crouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -202,6 +242,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_fastfalling;
     private readonly InputAction m_Gameplay_shoot;
     private readonly InputAction m_Gameplay_passthrough;
+    private readonly InputAction m_Gameplay_reload;
+    private readonly InputAction m_Gameplay_crouch;
     public struct GameplayActions
     {
         private @PlayerControl m_Wrapper;
@@ -212,6 +254,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @fastfalling => m_Wrapper.m_Gameplay_fastfalling;
         public InputAction @shoot => m_Wrapper.m_Gameplay_shoot;
         public InputAction @passthrough => m_Wrapper.m_Gameplay_passthrough;
+        public InputAction @reload => m_Wrapper.m_Gameplay_reload;
+        public InputAction @crouch => m_Wrapper.m_Gameplay_crouch;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -239,6 +283,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @passthrough.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
                 @passthrough.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
                 @passthrough.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
+                @reload.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
+                @reload.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
+                @reload.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
+                @crouch.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCrouch;
+                @crouch.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCrouch;
+                @crouch.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -261,6 +311,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @passthrough.started += instance.OnPassthrough;
                 @passthrough.performed += instance.OnPassthrough;
                 @passthrough.canceled += instance.OnPassthrough;
+                @reload.started += instance.OnReload;
+                @reload.performed += instance.OnReload;
+                @reload.canceled += instance.OnReload;
+                @crouch.started += instance.OnCrouch;
+                @crouch.performed += instance.OnCrouch;
+                @crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -273,5 +329,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnFastfalling(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPassthrough(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
 }
