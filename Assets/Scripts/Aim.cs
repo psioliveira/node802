@@ -7,69 +7,52 @@ public class Aim : MonoBehaviour
     [SerializeField]
     private GameObject pivotPoint;
     internal PlayerControl pc;
-    Vector2 aimMove;
     public float speed;
-    [SerializeField]
-    private Vector3 analog = new Vector3();
     public Camera cam;
     public GameObject aim;
-    private Rigidbody rigidBody;
+    Vector2 axis;
 
     private void Awake()
     {
         pc = new PlayerControl();
-        pc.Gameplay.walk.performed += ctx => aimMove = ctx.ReadValue<Vector2>();
-        pc.Gameplay.walk.canceled += ctx => aimMove = Vector2.zero;
+        pc.Gameplay.aim.performed += ctx => axis = ctx.ReadValue<Vector2>();
+        pc.Gameplay.aim.canceled += ctx => axis = Vector2.zero;
+
     }
 
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
         cam = Camera.main;
 
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-        analog.y = aimMove.y;
-        analog.z = aimMove.x;
         AimCursor();
-        pivotPoint.transform.LookAt(this.transform);
     }
 
 
 
     void AimCursor()
     {
-
-        float _horizontal = aimMove.x;
-        float _vertical = aimMove.y;
-        rigidBody.velocity = new Vector3(0, _vertical * speed * -1, _horizontal * speed);
-
-        //manter na camera
-
-
-        if (transform.position.z > cam.transform.position.z + 100f)
-        {
-            aim.transform.position = new Vector3(aim.transform.position.x, aim.transform.position.y, (cam.transform.position.z + 100f));
+        if (axis.x == 0f && axis.y == 0f)
+        {  
+            Vector3 curRot = pivotPoint.transform.localEulerAngles;  
+            Vector3 homeRot;
+            if (curRot.x > 180f)
+            {  
+                homeRot = new Vector3(359.999f, 0f, 0f); //it doesnt return to perfect zero 
+            }
+            else
+            {                                                                      // otherwise it rotates wrong direction 
+                homeRot = Vector3.zero;
+            }
+            pivotPoint.transform.localEulerAngles = Vector3.Slerp(curRot, homeRot, Time.deltaTime * 4);
         }
-
-        if (transform.position.z < cam.transform.position.z - 100f)
+        else
         {
-            aim.transform.position = new Vector3(aim.transform.position.x, aim.transform.position.y, (cam.transform.position.z - 100f));
+            pivotPoint.transform.localEulerAngles = new Vector3(Mathf.Atan2(-axis.y, axis.x) * 180 / Mathf.PI, 0f, 0f); // this does the actual rotaion according to inputs
         }
-
-        if (transform.position.y > cam.transform.position.y + 100f)
-        {
-            aim.transform.position = new Vector3(aim.transform.position.x, (cam.transform.position.y + 0.6f), aim.transform.position.z);
-        }
-
-        if (transform.position.y < cam.transform.position.y - 100f)
-        {
-            aim.transform.position = new Vector3(aim.transform.position.x, (cam.transform.position.y - 100f), aim.transform.position.z);
-        }
-
     }
 
 
