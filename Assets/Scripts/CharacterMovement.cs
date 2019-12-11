@@ -46,6 +46,7 @@ public class CharacterMovement : MonoBehaviour
     {
         UpdateAcceleration();
         UpdatePosition();
+        UpdatePassThrough();
     }
     private void UpdateAcceleration()
     {
@@ -67,9 +68,7 @@ public class CharacterMovement : MonoBehaviour
             Physics.IgnoreCollision(this.GetComponent<Collider>(), _phisicObject.GetPlatform().GetComponent<Collider>(), true);
             _pass = false;
         }
-
     }
-
 
     private void UpdatePosition()
     {
