@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 public class UI_Player_Manager : MonoBehaviour
@@ -18,6 +19,11 @@ public class UI_Player_Manager : MonoBehaviour
 
     [SerializeField]
     internal IShell_Manager shells;
+
+    [SerializeField]
+    private Image flat;
+    [SerializeField]
+    private RawImage depth;
 
     private int testvalue = 10;
 
@@ -60,8 +66,30 @@ public class UI_Player_Manager : MonoBehaviour
         {
             AddShell(1);
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SwitchPortrait(false);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            SwitchPortrait(true);
+        }
 
 
+    }
+
+    private void SwitchPortrait(bool value)
+    {
+        if (value)
+        {
+            depth.enabled = true;
+            flat.enabled = false;
+        }
+        else
+        {
+            depth.enabled = false;
+            flat.enabled = true;
+        }
     }
 
     internal void SetPlayer()
