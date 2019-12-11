@@ -19,6 +19,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
             ""id"": ""0b4c6b6b-8376-42da-852a-356ca7c101ee"",
             ""actions"": [
                 {
+                    ""name"": ""aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d246fad-c72f-4005-86e3-95a36d2e377f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""walk"",
                     ""type"": ""Button"",
                     ""id"": ""abab9b90-6c8e-4a4b-a230-c1c01675538b"",
@@ -46,6 +54,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""name"": ""shoot"",
                     ""type"": ""Button"",
                     ""id"": ""5f8c29da-5569-4233-b4e5-4dd8a079e486"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""pass through"",
+                    ""type"": ""Button"",
+                    ""id"": ""6add9423-3279-4fbc-aa0b-eedf0dc2d85a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -95,6 +111,28 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce19452a-de50-4294-9ea7-6291bef459a2"",
+                    ""path"": ""<DualShockGamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pass through"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c18a3fb-f278-4044-812c-d60046c30aea"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -103,10 +141,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_aim = m_Gameplay.FindAction("aim", throwIfNotFound: true);
         m_Gameplay_walk = m_Gameplay.FindAction("walk", throwIfNotFound: true);
         m_Gameplay_jump = m_Gameplay.FindAction("jump", throwIfNotFound: true);
         m_Gameplay_fastfalling = m_Gameplay.FindAction("fast falling", throwIfNotFound: true);
         m_Gameplay_shoot = m_Gameplay.FindAction("shoot", throwIfNotFound: true);
+        m_Gameplay_passthrough = m_Gameplay.FindAction("pass through", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -156,18 +196,22 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
+    private readonly InputAction m_Gameplay_aim;
     private readonly InputAction m_Gameplay_walk;
     private readonly InputAction m_Gameplay_jump;
     private readonly InputAction m_Gameplay_fastfalling;
     private readonly InputAction m_Gameplay_shoot;
+    private readonly InputAction m_Gameplay_passthrough;
     public struct GameplayActions
     {
         private @PlayerControl m_Wrapper;
         public GameplayActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @aim => m_Wrapper.m_Gameplay_aim;
         public InputAction @walk => m_Wrapper.m_Gameplay_walk;
         public InputAction @jump => m_Wrapper.m_Gameplay_jump;
         public InputAction @fastfalling => m_Wrapper.m_Gameplay_fastfalling;
         public InputAction @shoot => m_Wrapper.m_Gameplay_shoot;
+        public InputAction @passthrough => m_Wrapper.m_Gameplay_passthrough;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -177,6 +221,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
+                @aim.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
+                @aim.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
+                @aim.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
                 @walk.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalk;
                 @walk.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalk;
                 @walk.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalk;
@@ -189,10 +236,16 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @shoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
                 @shoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
                 @shoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
+                @passthrough.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
+                @passthrough.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
+                @passthrough.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @aim.started += instance.OnAim;
+                @aim.performed += instance.OnAim;
+                @aim.canceled += instance.OnAim;
                 @walk.started += instance.OnWalk;
                 @walk.performed += instance.OnWalk;
                 @walk.canceled += instance.OnWalk;
@@ -205,15 +258,20 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @shoot.started += instance.OnShoot;
                 @shoot.performed += instance.OnShoot;
                 @shoot.canceled += instance.OnShoot;
+                @passthrough.started += instance.OnPassthrough;
+                @passthrough.performed += instance.OnPassthrough;
+                @passthrough.canceled += instance.OnPassthrough;
             }
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
     public interface IGameplayActions
     {
+        void OnAim(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnFastfalling(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnPassthrough(InputAction.CallbackContext context);
     }
 }

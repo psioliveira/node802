@@ -6,6 +6,14 @@
             "id": "0b4c6b6b-8376-42da-852a-356ca7c101ee",
             "actions": [
                 {
+                    "name": "aim",
+                    "type": "Button",
+                    "id": "2d246fad-c72f-4005-86e3-95a36d2e377f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "walk",
                     "type": "Button",
                     "id": "abab9b90-6c8e-4a4b-a230-c1c01675538b",
@@ -33,6 +41,14 @@
                     "name": "shoot",
                     "type": "Button",
                     "id": "5f8c29da-5569-4233-b4e5-4dd8a079e486",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "pass through",
+                    "type": "Button",
+                    "id": "6add9423-3279-4fbc-aa0b-eedf0dc2d85a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -80,6 +96,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce19452a-de50-4294-9ea7-6291bef459a2",
+                    "path": "<DualShockGamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "pass through",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c18a3fb-f278-4044-812c-d60046c30aea",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

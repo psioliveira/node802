@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PhysicObject : MonoBehaviour
 {
-    internal const float minimumMovementDistance = 0.1f;
 
     internal Vector3 gravityVector = Vector3.zero;
-    internal Vector3 gravitySide = Vector3.up;
     internal Vector3 fallVelocity = Vector3.zero;
     internal Rigidbody rigidBody;
     [SerializeField]
@@ -18,48 +16,21 @@ public class PhysicObject : MonoBehaviour
     internal float groundOfset = 0;
     [SerializeField]
     internal float groundCheckRadius = 0.5f;
-
-    // internal Side ChoosedSide = Side.down;
-
-    //public enum Side
-    //{ up, down, left, right }
+    [SerializeField]
+    private float platformOfset = 0;
+    [SerializeField]
+    internal float playerHeadOfset = 0;
+    [SerializeField]
+    private float platformCheckRadius = 0;
+    [SerializeField]
+    private float headCheckRadius = 0;
 
     private void Start()
     {
         rigidBody = this.gameObject.GetComponent<Rigidbody>();
         rigidBody.useGravity = false;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        //switch (ChoosedSide)
-        //{
-        //    case Side.up:
-        //        gravityVector = new Vector3(0, 1F, 0);
-        //        gravitySide = Vector3.up;
-        //        break;
 
-        //    case Side.down:
-        //        gravityVector = new Vector3(0, -1F, 0);
-        //        gravitySide = Vector3.up;
-        //        break;
-
-        //    case Side.left:
-        //        gravityVector = new Vector3(0, 0, -1F);
-        //        gravitySide = Vector3.forward;
-        //        break;
-
-        //    case Side.right:
-        //        gravityVector = new Vector3(0, 0, 1F);
-        //        gravitySide = Vector3.forward;
-        //        break;
-
-        //    default:
-        //        gravityVector = new Vector3(0, -1F, 0);
-        //        gravitySide = Vector3.up;
-        //        break;
-        //}
-    }
     private void FixedUpdate()
     {
         rigidBody.AddForce(Physics.gravity * (Mathf.Pow(rigidBody.mass, 2)) * gravityFactor);
@@ -72,11 +43,40 @@ public class PhysicObject : MonoBehaviour
         return (col.Length > 0 && col != null);
     }
 
+    internal GameObject GetPlatform()
+    {
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y - groundOfset, transform.position.z);
+        Collider[] col = Physics.OverlapSphere(pos, groundCheckRadius, LayerMask.GetMask("pass through"));
+        return col[0].gameObject;
+    }
+
+    internal bool IsOnPassPlatform()
+    {
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y - platformOfset, transform.position.z);
+        Collider[] col = Physics.OverlapSphere(pos, platformCheckRadius, LayerMask.GetMask("pass through"));
+        return (col.Length > 0 || col != null);
+    }
+
+    internal bool playerHeadInside()
+    {
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y - playerHeadOfset, transform.position.z);
+        Collider[] col = Physics.OverlapSphere(pos, headCheckRadius, LayerMask.GetMask("pass through"));
+        return (col.Length > 0 || col != null);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Vector3 pos1 = new Vector3(transform.position.x, transform.position.y - groundOfset, transform.position.z);
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(pos1, groundCheckRadius);
+
+        Vector3 pos2 = new Vector3(transform.position.x, transform.position.y - platformOfset, transform.position.z);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(pos2, groundCheckRadius);
+
+        Vector3 pos3 = new Vector3(transform.position.x, transform.position.y - playerHeadOfset, transform.position.z);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(pos3, groundCheckRadius);
 
     }
 }

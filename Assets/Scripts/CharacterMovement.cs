@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
     private float accelerationFactor = 1f;
     private bool _jump;
     private bool _fastfall;
+    private bool _pass;
 
     private void Awake()
     {
@@ -26,8 +27,11 @@ public class CharacterMovement : MonoBehaviour
         pc.Gameplay.jump.performed += ctx => _jump = _phisicObject.IsOnGround();
         pc.Gameplay.jump.canceled += ctx => _jump = false;
 
-        pc.Gameplay.fastfalling.performed += ctx => _fastfall = !_phisicObject.IsOnGround();
+        pc.Gameplay.fastfalling.performed += ctx => _fastfall = (!_phisicObject.IsOnGround() || !_phisicObject.IsOnPassPlatform());
         pc.Gameplay.fastfalling.canceled += ctx => _fastfall = false;
+
+        pc.Gameplay.passthrough.performed += ctx => _pass = _phisicObject.IsOnPassPlatform();
+        pc.Gameplay.fastfalling.canceled += ctx => _pass = false;
 
     }
 
@@ -43,8 +47,6 @@ public class CharacterMovement : MonoBehaviour
         UpdateAcceleration();
         UpdatePosition();
     }
-
-
     private void UpdateAcceleration()
     {
         if (_jump && _phisicObject.IsOnGround())
@@ -55,12 +57,25 @@ public class CharacterMovement : MonoBehaviour
 
     }
 
+    private void UpdatePassThrough()
+    {
+        if (_phisicObject.playerHeadInside())
+        { Physics.IgnoreCollision(this.GetComponent<Collider>(), _phisicObject.GetPlatform().GetComponent<Collider>(), false); }
+
+        if (_pass && _phisicObject.IsOnPassPlatform())
+        {
+            Physics.IgnoreCollision(this.GetComponent<Collider>(), _phisicObject.GetPlatform().GetComponent<Collider>(), true);
+            _pass = false;
+        }
+
+    }
+
 
     private void UpdatePosition()
     {
         Vector3 motion = Vector3.zero;
         motion.z = movement.x;
-        _rigidbody.AddForce(motion*accelerationFactor, ForceMode.Acceleration);
+        _rigidbody.AddForce(motion * accelerationFactor, ForceMode.Acceleration);
     }
 
     private void OnEnable()
