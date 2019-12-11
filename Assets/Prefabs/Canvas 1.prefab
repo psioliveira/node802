@@ -1054,7 +1054,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 200
   field of view: 52
   orthographic: 0
   orthographic size: 5
@@ -1063,10 +1063,10 @@ Camera:
     serializedVersion: 2
     m_Bits: 32
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8600000, guid: bd9ef01e61a50d840bf2ab8f3428efd9, type: 2}
+  m_TargetTexture: {fileID: 8600000, guid: ed278fec5b8a51d42a17088f39f2ce99, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
+  m_HDR: 0
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
@@ -1489,7 +1489,7 @@ GameObject:
   - component: {fileID: 4437369663008033398}
   - component: {fileID: 4437369663008033401}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1734,7 +1734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4437369663406136510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3696,7 +3696,7 @@ RectTransform:
   m_GameObject: {fileID: 7049598480814630237}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.14, y: 1.14, z: 1.14}
+  m_LocalScale: {x: 1.1289803, y: 1.1289803, z: 1.1289803}
   m_Children:
   - {fileID: 4437369663648297761}
   m_Father: {fileID: 4437369663008033400}
@@ -3704,7 +3704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -45, y: 50}
+  m_AnchoredPosition: {x: -7, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7049598480923785531

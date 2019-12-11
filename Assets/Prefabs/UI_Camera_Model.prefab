@@ -89,14 +89,14 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 3.6
   field of view: 58
   orthographic: 0
   orthographic size: 5
   m_Depth: -10
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 460bc775bf4f6da4fb73d56c26e69272, type: 2}
   m_TargetDisplay: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_RendererOverrideOption: 1
@@ -151,33 +151,18 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: cf4198fe2f89f914483de23d0a762a47,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 973372770314338416, guid: cf4198fe2f89f914483de23d0a762a47,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -7114577863419070732, guid: cf4198fe2f89f914483de23d0a762a47,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: -6798783316884074078, guid: cf4198fe2f89f914483de23d0a762a47,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b5f953ff9d49bbc438dd4fb508219b23, type: 2}
-    - target: {fileID: -6798783316884074078, guid: cf4198fe2f89f914483de23d0a762a47,
-        type: 3}
-      propertyPath: m_Materials.Array.data[2]
-      value: 
-      objectReference: {fileID: 2100000, guid: b5f953ff9d49bbc438dd4fb508219b23, type: 2}
-    - target: {fileID: -6798783316884074078, guid: cf4198fe2f89f914483de23d0a762a47,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7508def0d47f51543b6cc531feddf8d9, type: 2}
-    - target: {fileID: -6057140222963153312, guid: cf4198fe2f89f914483de23d0a762a47,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 36d1b50d7bdab97438e998cc6ecc24a6, type: 2}
     - target: {fileID: -4216859302048453862, guid: cf4198fe2f89f914483de23d0a762a47,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -233,25 +218,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -3523294187882140501, guid: cf4198fe2f89f914483de23d0a762a47,
+    - target: {fileID: -6057140222963153312, guid: cf4198fe2f89f914483de23d0a762a47,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.60024315
-      objectReference: {fileID: 0}
-    - target: {fileID: 973372770314338416, guid: cf4198fe2f89f914483de23d0a762a47,
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 36d1b50d7bdab97438e998cc6ecc24a6, type: 2}
+    - target: {fileID: -6798783316884074078, guid: cf4198fe2f89f914483de23d0a762a47,
         type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b5f953ff9d49bbc438dd4fb508219b23, type: 2}
+    - target: {fileID: -6798783316884074078, guid: cf4198fe2f89f914483de23d0a762a47,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7508def0d47f51543b6cc531feddf8d9, type: 2}
+    - target: {fileID: -6798783316884074078, guid: cf4198fe2f89f914483de23d0a762a47,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: b5f953ff9d49bbc438dd4fb508219b23, type: 2}
     - target: {fileID: 7392069088223654447, guid: cf4198fe2f89f914483de23d0a762a47,
         type: 3}
       propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7542284731884969320, guid: cf4198fe2f89f914483de23d0a762a47,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.6395526
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf4198fe2f89f914483de23d0a762a47, type: 3}
