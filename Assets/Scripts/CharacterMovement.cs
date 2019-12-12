@@ -14,7 +14,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     internal PlayerControl pc;
     [SerializeField]
-    private PhysicObject _phisicObject;
+    private PhysicObject _physicObject;
     [SerializeField]
     private Rigidbody _rigidbody;
     [SerializeField]
@@ -34,7 +34,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float heightModifier;
 
-    private float cooldownTimer = 2;
+    private float cooldownTimer = 0.3f;
     private float cooldownCurrent = 0;
     private bool cooldownReached = false;
     private int shootCount = 0;
@@ -50,10 +50,10 @@ public class CharacterMovement : MonoBehaviour
         pc.Gameplay.walk.performed += ctx => movement = ctx.ReadValue<Vector2>();
         pc.Gameplay.walk.canceled += ctx => movement = Vector2.zero;
 
-        pc.Gameplay.jump.performed += ctx => _jump = _phisicObject.IsOnGround();
+        pc.Gameplay.jump.performed += ctx => _jump = _physicObject.IsOnGround();
         pc.Gameplay.jump.canceled += ctx => _jump = false;
 
-        pc.Gameplay.fastfalling.performed += ctx => _fastfall = (!_phisicObject.IsOnGround() || !_phisicObject.IsOnPassPlatform());
+        pc.Gameplay.fastfalling.performed += ctx => _fastfall = (!_physicObject.IsOnGround() || !_physicObject.IsOnPassPlatform());
         pc.Gameplay.fastfalling.canceled += ctx => _fastfall = false;
 
         pc.Gameplay.reload.performed += ctx => shootCount = 3;
@@ -66,7 +66,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void Start()
     {
-        _phisicObject = GetComponent<PhysicObject>();
+        _physicObject = GetComponent<PhysicObject>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -94,6 +94,7 @@ public class CharacterMovement : MonoBehaviour
         {
             shootCount = 0;
             reloading = true;
+            reloadCooldownCurrent = 0;
             ui.ReloadShell(reloadColdownTimer);
         }
 
@@ -115,7 +116,7 @@ public class CharacterMovement : MonoBehaviour
             _jump = false;
         }
 
-        if (!_phisicObject.IsOnGround())
+        if (!_physicObject.IsOnGround())
         {
             if (_fastfall)
             {
@@ -154,6 +155,15 @@ public class CharacterMovement : MonoBehaviour
         Vector3 motion = Vector3.zero;
         motion.z = movement.x;
         _rigidbody.AddForce(motion * accelerationFactor, ForceMode.Acceleration);
+        if (_physicObject.IsOnGround())
+        {
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, Mathf.Clamp(_rigidbody.velocity.z, -65f, 65f));
+        }
+        else
+        {
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, Mathf.Clamp(_rigidbody.velocity.z, -100f, 100f));
+        }
+
     }
 
     private void OnEnable()

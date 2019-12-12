@@ -14,11 +14,12 @@ public class Enemy_Dummy : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        TextChange();
     }
 
     private void TextChange()
     {
-        HP.text = "I have taken: " + " HP Damage!";
+        HP.text = "I have taken: " + CurrentDamage + " HP Damage!";
         if(CurrentDamage >= 10)
         {
             HP.text += ":)";
