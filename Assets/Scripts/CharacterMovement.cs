@@ -18,6 +18,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private Rigidbody _rigidbody;
     [SerializeField]
+    private GameObject shoot;
+    [SerializeField]
     private float accelerationFactor = 1f;
 
     private bool _jump = false;
@@ -46,6 +48,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void Awake()
     {
+        shoot.SetActive(false);
         pc = new PlayerControl();
         pc.Gameplay.walk.performed += ctx => movement = ctx.ReadValue<Vector2>();
         pc.Gameplay.walk.canceled += ctx => movement = Vector2.zero;
@@ -78,6 +81,7 @@ public class CharacterMovement : MonoBehaviour
             if (cooldownCurrent >= cooldownTimer)
             {
                 cooldownReached = true;
+                shoot.SetActive(false);
             }
         }
 
@@ -87,6 +91,7 @@ public class CharacterMovement : MonoBehaviour
             if (reloadCooldownCurrent >= reloadColdownTimer)
             {
                 reloading = false;
+                
             }
         }
 
@@ -134,6 +139,7 @@ public class CharacterMovement : MonoBehaviour
         {
             if (_shoot)
             {
+                shoot.SetActive(true);
                 ui.UseShell();
                 shootCount += 1;
                 cooldownReached = false;
