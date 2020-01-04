@@ -139,7 +139,6 @@ public class CharacterMovement : MonoBehaviour
         {
             if (_shoot)
             {
-                shoot.SetActive(true);
                 ui.UseShell();
                 shootCount += 1;
                 cooldownReached = false;
@@ -148,6 +147,7 @@ public class CharacterMovement : MonoBehaviour
                 Debug.Log("explosion");
                 _rigidbody.AddExplosionForce(knockbackForce * 10000, _explosionPosition, explosionRadius, heightModifier);
                 _shoot = false;
+                shoot.SetActive(true);
 
             }
         }
