@@ -27,6 +27,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float accelerationFactor = 1f;
 
+    [SerializeField]
+    private Transform aim;
 
     internal Vector2 movement;
     internal Vector3 motion = Vector3.zero;
@@ -35,28 +37,23 @@ public class CharacterMovement : MonoBehaviour
     private bool _fastfall = false;
     private bool _shoot = false;
 
-
-    [SerializeField]
-    private Transform explosionPosition;
-
     [SerializeField]
     private float knockbackForce;
-
-    [SerializeField]
-    private float explosionRadius;
-
     [SerializeField]
     private float heightModifier;
 
-
+    [SerializeField]
     private float cooldownTimer = 0.1f;
+
     private float cooldownCurrent = 0;
     private bool cooldownReached = false;
     private bool lastDirection = true;
     private int shootCount = 0;
 
     private bool reloading = false;
+    [SerializeField]
     private float reloadColdownTimer = 1;
+
     private float reloadCooldownCurrent = 0;
 
 
@@ -157,9 +154,10 @@ public class CharacterMovement : MonoBehaviour
                 shootCount += 1;
                 cooldownReached = false;
                 cooldownCurrent = 0f;
-                Vector3 _explosionPosition = this.explosionPosition.position;
+
+                Vector3 _knockbackDirection = (transform.position - aim.position).normalized;
                 Debug.Log("explosion");
-                _rigidbody.AddExplosionForce(knockbackForce * 10000, _explosionPosition, explosionRadius, heightModifier);
+                _rigidbody.AddForce(_knockbackDirection * 100f * knockbackForce, ForceMode.Impulse);
                 _shoot = false;
                 shoot.SetActive(true);
 
