@@ -8,61 +8,72 @@ public class CharacterMovement : MonoBehaviour
 
     [SerializeField]
     private UI_Player_Manager ui;
+
     [SerializeField]
     private float jumpAcceleration = 25.0f;
-    internal Vector2 movement;
+
     [SerializeField]
-    internal PlayerControl pc;
+    internal PlayerControl playerControl;
+
     [SerializeField]
     private PhysicObject _physicObject;
+
     [SerializeField]
     private Rigidbody _rigidbody;
+
     [SerializeField]
     private GameObject shoot;
+
     [SerializeField]
     private float accelerationFactor = 1f;
+
+    [SerializeField]
+    private Transform aim;
+
+    internal Vector2 movement;
+    internal Vector3 motion = Vector3.zero;
 
     private bool _jump = false;
     private bool _fastfall = false;
     private bool _shoot = false;
 
-
-    [SerializeField]
-    private Transform explosionPosition;
     [SerializeField]
     private float knockbackForce;
     [SerializeField]
-    private float explosionRadius;
-    [SerializeField]
     private float heightModifier;
 
-    private float cooldownTimer = 0.3f;
+    [SerializeField]
+    private float cooldownTimer = 0.1f;
+
     private float cooldownCurrent = 0;
     private bool cooldownReached = false;
+    private bool lastDirection = true;
     private int shootCount = 0;
 
     private bool reloading = false;
-    private float reloadColdownTimer = 2;
+    [SerializeField]
+    private float reloadColdownTimer = 1;
+
     private float reloadCooldownCurrent = 0;
 
 
     private void Awake()
     {
         shoot.SetActive(false);
-        pc = new PlayerControl();
-        pc.Gameplay.walk.performed += ctx => movement = ctx.ReadValue<Vector2>();
-        pc.Gameplay.walk.canceled += ctx => movement = Vector2.zero;
+        playerControl = new PlayerControl();
+        playerControl.Gameplay.walk.performed += ctx => movement = ctx.ReadValue<Vector2>();
+        playerControl.Gameplay.walk.canceled += ctx => movement = Vector2.zero;
 
-        pc.Gameplay.jump.performed += ctx => _jump = _physicObject.IsOnGround();
-        pc.Gameplay.jump.canceled += ctx => _jump = false;
+        playerControl.Gameplay.jump.performed += ctx => _jump = _physicObject.IsOnGround();
+        playerControl.Gameplay.jump.canceled += ctx => _jump = false;
 
-        pc.Gameplay.fastfalling.performed += ctx => _fastfall = (!_physicObject.IsOnGround() || !_physicObject.IsOnPassPlatform());
-        pc.Gameplay.fastfalling.canceled += ctx => _fastfall = false;
+        playerControl.Gameplay.fastfalling.performed += ctx => _fastfall = (!_physicObject.IsOnGround() || !_physicObject.IsOnPassPlatform());
+        playerControl.Gameplay.fastfalling.canceled += ctx => _fastfall = false;
 
-        pc.Gameplay.reload.performed += ctx => shootCount = 3;
+        playerControl.Gameplay.reload.performed += ctx => shootCount = 3;
 
-        pc.Gameplay.shoot.performed += ctx => _shoot = true;
-        pc.Gameplay.shoot.canceled += ctx => _shoot = false;
+        playerControl.Gameplay.shoot.performed += ctx => _shoot = true;
+        playerControl.Gameplay.shoot.canceled += ctx => _shoot = false;
 
 
     }
@@ -91,7 +102,7 @@ public class CharacterMovement : MonoBehaviour
             if (reloadCooldownCurrent >= reloadColdownTimer)
             {
                 reloading = false;
-                
+
             }
         }
 
@@ -125,7 +136,7 @@ public class CharacterMovement : MonoBehaviour
         {
             if (_fastfall)
             {
-                _rigidbody.AddForce(Vector3.up * -jumpAcceleration*20f, ForceMode.Impulse);
+                _rigidbody.AddForce(Vector3.up * -jumpAcceleration * 20f, ForceMode.Impulse);
                 _fastfall = false;
             }
         }
@@ -139,15 +150,16 @@ public class CharacterMovement : MonoBehaviour
         {
             if (_shoot)
             {
-                shoot.SetActive(true);
                 ui.UseShell();
                 shootCount += 1;
                 cooldownReached = false;
                 cooldownCurrent = 0f;
-                Vector3 _explosionPosition = this.explosionPosition.position;
+
+                Vector3 _knockbackDirection = (transform.position - aim.position).normalized;
                 Debug.Log("explosion");
-                _rigidbody.AddExplosionForce(knockbackForce * 10000, _explosionPosition, explosionRadius, heightModifier);
+                _rigidbody.AddForce(_knockbackDirection * 100f * knockbackForce, ForceMode.Impulse);
                 _shoot = false;
+                shoot.SetActive(true);
 
             }
         }
@@ -158,9 +170,23 @@ public class CharacterMovement : MonoBehaviour
 
     private void UpdatePosition()
     {
-        Vector3 motion = Vector3.zero;
+        //left direction --> direction equals true || right direction --> direction equals false
+        bool direction = (motion.z + movement.x < motion.z ? true : false);
+
         motion.z = movement.x;
+
+        if (direction != lastDirection)
+        {
+            lastDirection = direction;
+
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.z = 0;
+            _rigidbody.velocity = velocity;
+
+        }
+
         _rigidbody.AddForce(motion * accelerationFactor, ForceMode.Acceleration);
+
         if (_physicObject.IsOnGround())
         {
             _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, Mathf.Clamp(_rigidbody.velocity.z, -65f, 65f));
@@ -170,16 +196,18 @@ public class CharacterMovement : MonoBehaviour
             _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, Mathf.Clamp(_rigidbody.velocity.z, -100f, 100f));
         }
 
+
+
     }
 
     private void OnEnable()
     {
-        pc.Gameplay.Enable();
+        playerControl.Gameplay.Enable();
     }
 
     private void OnDisable()
     {
-        pc.Gameplay.Disable();
+        playerControl.Gameplay.Disable();
     }
 
 }
