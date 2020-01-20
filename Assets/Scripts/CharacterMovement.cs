@@ -5,15 +5,14 @@ using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerControl playerControl;
 
     [SerializeField]
     private UI_Player_Manager ui;
 
     [SerializeField]
     private float jumpAcceleration = 25.0f;
-
-    [SerializeField]
-    internal PlayerControl playerControl;
 
     [SerializeField]
     private PhysicObject _physicObject;
@@ -27,65 +26,95 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float accelerationFactor = 1f;
 
+    [SerializeField]
+    private Transform aim;
+
+    [SerializeField]
+    private GameObject[] OtherPlayer;
 
     internal Vector2 movement;
+    internal Vector2 aimv;
     internal Vector3 motion = Vector3.zero;
 
     private bool _jump = false;
     private bool _fastfall = false;
     private bool _shoot = false;
 
-
-    [SerializeField]
-    private Transform explosionPosition;
-
     [SerializeField]
     private float knockbackForce;
-
-    [SerializeField]
-    private float explosionRadius;
-
     [SerializeField]
     private float heightModifier;
 
-
+    [SerializeField]
     private float cooldownTimer = 0.1f;
+
     private float cooldownCurrent = 0;
     private bool cooldownReached = false;
     private bool lastDirection = true;
     private int shootCount = 0;
 
     private bool reloading = false;
+    [SerializeField]
     private float reloadColdownTimer = 1;
     private float reloadCooldownCurrent = 0;
-
-
     private void Awake()
     {
         shoot.SetActive(false);
         playerControl = new PlayerControl();
-        playerControl.Gameplay.walk.performed += ctx => movement = ctx.ReadValue<Vector2>();
-        playerControl.Gameplay.walk.canceled += ctx => movement = Vector2.zero;
-
-        playerControl.Gameplay.jump.performed += ctx => _jump = _physicObject.IsOnGround();
-        playerControl.Gameplay.jump.canceled += ctx => _jump = false;
-
-        playerControl.Gameplay.fastfalling.performed += ctx => _fastfall = (!_physicObject.IsOnGround() || !_physicObject.IsOnPassPlatform());
-        playerControl.Gameplay.fastfalling.canceled += ctx => _fastfall = false;
-
-        playerControl.Gameplay.reload.performed += ctx => shootCount = 3;
-
-        playerControl.Gameplay.shoot.performed += ctx => _shoot = true;
-        playerControl.Gameplay.shoot.canceled += ctx => _shoot = false;
-
-
     }
-
     private void Start()
     {
         _physicObject = GetComponent<PhysicObject>();
         _rigidbody = GetComponent<Rigidbody>();
+        OtherPlayer = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject g in OtherPlayer)
+        {
+            Physics.IgnoreCollision(g.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+
     }
+
+    private void OnAim(InputValue ctx)
+    {
+        aimv = ctx.Get<Vector2>();
+    }
+
+    private void OnWalk(InputValue value)
+    {
+        movement = value.Get<Vector2>();
+    }
+
+    private void OnJump()
+    {
+        _jump = _physicObject.IsOnGround();
+    }
+
+    private void OnShoot()
+    {
+        _shoot = true;
+    }
+
+    private void OnFastfalling()
+    {
+        _fastfall = (!_physicObject.IsOnGround() || !_physicObject.IsOnPassPlatform());
+    }
+
+    private void OnReaload()
+    {
+        shootCount = 3;
+    }
+
+    private void OnCrouch()
+    {
+
+    }
+
+    private void OnPassthrough()
+    {
+
+    }
+
+
 
     private void Update()
     {
@@ -119,13 +148,15 @@ public class CharacterMovement : MonoBehaviour
 
     }
 
+
+
+
     void FixedUpdate()
     {
         UpdateKnockback();
         UpdateAcceleration();
         UpdatePosition();
     }
-
 
     private void UpdateAcceleration()
     {
@@ -145,34 +176,36 @@ public class CharacterMovement : MonoBehaviour
         }
 
     }
-
-
     private void UpdateKnockback()
     {
         if (cooldownReached && !reloading)
         {
             if (_shoot)
             {
-                ui.UseShell();
+                //  ui.UseShell();
+                _shoot = false;
                 shootCount += 1;
                 cooldownReached = false;
                 cooldownCurrent = 0f;
-                Vector3 _explosionPosition = this.explosionPosition.position;
+                Vector3 velocity = _rigidbody.velocity;
+                velocity.z = 0;
+
+                Vector3 _knockbackDirection = (transform.position - aim.position).normalized;
                 Debug.Log("explosion");
-                _rigidbody.AddExplosionForce(knockbackForce * 10000, _explosionPosition, explosionRadius, heightModifier);
-                _shoot = false;
+                _rigidbody.AddForce(_knockbackDirection * 100f * knockbackForce, ForceMode.Impulse);
+
                 shoot.SetActive(true);
 
             }
         }
+        else
+        {
+            _shoot = false;
+        }
 
     }
-
-
-
     private void UpdatePosition()
     {
-        //left direction --> direction equals true || right direction --> direction equals false
         bool direction = (motion.z + movement.x < motion.z ? true : false);
 
         motion.z = movement.x;
@@ -186,6 +219,12 @@ public class CharacterMovement : MonoBehaviour
             _rigidbody.velocity = velocity;
 
         }
+        if (movement == Vector2.zero)
+        {
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.z = 0;
+            _rigidbody.velocity = velocity;
+        }
 
         _rigidbody.AddForce(motion * accelerationFactor, ForceMode.Acceleration);
 
@@ -197,19 +236,9 @@ public class CharacterMovement : MonoBehaviour
         {
             _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, Mathf.Clamp(_rigidbody.velocity.z, -100f, 100f));
         }
-
-
-
     }
 
-    private void OnEnable()
-    {
-        playerControl.Gameplay.Enable();
-    }
 
-    private void OnDisable()
-    {
-        playerControl.Gameplay.Disable();
-    }
+
 
 }
