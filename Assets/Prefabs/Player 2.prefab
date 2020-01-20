@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivotPoint: {fileID: 1478808167520473576}
+  pi: {fileID: 0}
   speed: 500
   cam: {fileID: 1478808166204576899}
   aim: {fileID: 1478808165553209673}
@@ -312,7 +313,7 @@ GameObject:
   - component: {fileID: 1478808166445335574}
   - component: {fileID: 5627629763023710676}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -436,10 +437,11 @@ MonoBehaviour:
   shoot: {fileID: 1478808167172401104}
   accelerationFactor: 300
   aim: {fileID: 1478808165553209672}
-  PlayerNumber: 1
-  knockbackForce: 8
+  OtherPlayer: []
+  knockbackForce: 10
   heightModifier: 5
-  cooldownTimer: 0.3
+  cooldownTimer: 0.03
+  deadZone: 0.3
   reloadColdownTimer: 0.7
 --- !u!136 &1478808166445335574
 CapsuleCollider:

@@ -221,9 +221,10 @@ MonoBehaviour:
   accelerationFactor: 300
   aim: {fileID: 3040803092255590106}
   OtherPlayer: []
-  knockbackForce: 8
+  knockbackForce: 10
   heightModifier: 5
-  cooldownTimer: 0.3
+  cooldownTimer: 0.03
+  deadZone: 0.3
   reloadColdownTimer: 0.7
 --- !u!136 &3040803091631375236
 CapsuleCollider:

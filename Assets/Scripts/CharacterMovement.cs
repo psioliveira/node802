@@ -48,6 +48,9 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float cooldownTimer = 0.1f;
 
+    [SerializeField]
+    float deadZone;
+
     private float cooldownCurrent = 0;
     private bool cooldownReached = false;
     private bool lastDirection = true;
@@ -71,7 +74,7 @@ public class CharacterMovement : MonoBehaviour
         {
             Physics.IgnoreCollision(g.GetComponent<Collider>(), GetComponent<Collider>());
         }
-
+        
     }
 
     private void OnAim(InputValue ctx)
@@ -187,11 +190,9 @@ public class CharacterMovement : MonoBehaviour
                 shootCount += 1;
                 cooldownReached = false;
                 cooldownCurrent = 0f;
-                Vector3 velocity = _rigidbody.velocity;
-                velocity.z = 0;
+                Vector3 velocity = Vector3.zero;
 
                 Vector3 _knockbackDirection = (transform.position - aim.position).normalized;
-                Debug.Log("explosion");
                 _rigidbody.AddForce(_knockbackDirection * 100f * knockbackForce, ForceMode.Impulse);
 
                 shoot.SetActive(true);
@@ -219,7 +220,7 @@ public class CharacterMovement : MonoBehaviour
             _rigidbody.velocity = velocity;
 
         }
-        if (movement == Vector2.zero)
+        if (movement.x <=deadZone && movement.x >= -deadZone && _physicObject.IsOnGround())
         {
             Vector3 velocity = _rigidbody.velocity;
             velocity.z = 0;
