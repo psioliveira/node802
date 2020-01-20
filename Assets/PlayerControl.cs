@@ -15,13 +15,13 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     ""name"": ""PlayerControl"",
     ""maps"": [
         {
-            ""name"": ""Gameplay"",
-            ""id"": ""0b4c6b6b-8376-42da-852a-356ca7c101ee"",
+            ""name"": ""Gameplay1"",
+            ""id"": ""4bcede47-ac67-4a47-915b-094e63c410aa"",
             ""actions"": [
                 {
                     ""name"": ""aim"",
                     ""type"": ""Button"",
-                    ""id"": ""2d246fad-c72f-4005-86e3-95a36d2e377f"",
+                    ""id"": ""74f36cd6-7bcb-45b0-99ca-7a2cda4d95c9"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -29,7 +29,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""walk"",
                     ""type"": ""Button"",
-                    ""id"": ""abab9b90-6c8e-4a4b-a230-c1c01675538b"",
+                    ""id"": ""801f4216-e6a6-4c27-9283-c5b4534c1ff6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -37,7 +37,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""jump"",
                     ""type"": ""Button"",
-                    ""id"": ""a5dbb3ff-3c82-4796-b062-930c576a1355"",
+                    ""id"": ""0b889051-a027-45ef-9e27-2230c7761492"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -45,7 +45,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""fast falling"",
                     ""type"": ""Button"",
-                    ""id"": ""15e9b881-2cc7-4770-95d9-fb11a45b5a0c"",
+                    ""id"": ""6f3feec0-8650-41a4-806c-31ceb997b217"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -53,7 +53,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""shoot"",
                     ""type"": ""Button"",
-                    ""id"": ""5f8c29da-5569-4233-b4e5-4dd8a079e486"",
+                    ""id"": ""be58f14d-0d83-44f6-80e0-824e070898c5"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -61,7 +61,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""pass through"",
                     ""type"": ""Button"",
-                    ""id"": ""6add9423-3279-4fbc-aa0b-eedf0dc2d85a"",
+                    ""id"": ""694d2f52-0721-46f4-a3a6-4198a119cb0d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -69,7 +69,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""reload"",
                     ""type"": ""Button"",
-                    ""id"": ""5820fc7a-36d3-4b96-868b-c6b67de51286"",
+                    ""id"": ""38a5a327-dee2-4ab1-9839-45d14997ac0d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -77,7 +77,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": ""crouch"",
                     ""type"": ""Button"",
-                    ""id"": ""d5c7ef37-c7b7-45a2-a270-eb02460071da"",
+                    ""id"": ""e98568cd-d133-439a-8748-e19ebe0dda89"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -86,10 +86,10 @@ public class @PlayerControl : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""e61de8e7-ffac-4ca1-af4a-660e3a787d2b"",
+                    ""id"": ""f35366c7-df97-4237-8625-d565cb86771b"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""groups"": """",
                     ""action"": ""walk"",
                     ""isComposite"": false,
@@ -97,7 +97,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""18955933-5145-4ca3-9f40-5ba193201269"",
+                    ""id"": ""48c3cd66-fab7-467a-99d0-b536ca6f3006"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -108,7 +108,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""033d9c9b-1ed9-4a74-8a31-95c17705fd05"",
+                    ""id"": ""f04d1ec1-31ff-426e-ba34-207c9f22cf0b"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -119,9 +119,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9887a51c-0990-444d-9056-0464f4cfddc7"",
+                    ""id"": ""6b5e2ea6-eb01-4bae-9263-32935cbb34ad"",
                     ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""shoot"",
@@ -130,7 +130,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ce19452a-de50-4294-9ea7-6291bef459a2"",
+                    ""id"": ""00141b9b-fd37-4c2f-bdab-47236cc02ec6"",
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -141,10 +141,10 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4c18a3fb-f278-4044-812c-d60046c30aea"",
+                    ""id"": ""2fd23501-be94-4083-a953-15d740485d8a"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""groups"": """",
                     ""action"": ""aim"",
                     ""isComposite"": false,
@@ -152,7 +152,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4fce5f81-11dc-4a51-9e48-027b8800f566"",
+                    ""id"": ""89ec8eee-12f2-48c4-bcb5-7f1f764ff705"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -163,7 +163,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7eb418e1-fe69-4430-b9d6-eea2ba642260"",
+                    ""id"": ""374ee93c-0e00-49ce-8e7d-39d37306b191"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -177,16 +177,16 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_aim = m_Gameplay.FindAction("aim", throwIfNotFound: true);
-        m_Gameplay_walk = m_Gameplay.FindAction("walk", throwIfNotFound: true);
-        m_Gameplay_jump = m_Gameplay.FindAction("jump", throwIfNotFound: true);
-        m_Gameplay_fastfalling = m_Gameplay.FindAction("fast falling", throwIfNotFound: true);
-        m_Gameplay_shoot = m_Gameplay.FindAction("shoot", throwIfNotFound: true);
-        m_Gameplay_passthrough = m_Gameplay.FindAction("pass through", throwIfNotFound: true);
-        m_Gameplay_reload = m_Gameplay.FindAction("reload", throwIfNotFound: true);
-        m_Gameplay_crouch = m_Gameplay.FindAction("crouch", throwIfNotFound: true);
+        // Gameplay1
+        m_Gameplay1 = asset.FindActionMap("Gameplay1", throwIfNotFound: true);
+        m_Gameplay1_aim = m_Gameplay1.FindAction("aim", throwIfNotFound: true);
+        m_Gameplay1_walk = m_Gameplay1.FindAction("walk", throwIfNotFound: true);
+        m_Gameplay1_jump = m_Gameplay1.FindAction("jump", throwIfNotFound: true);
+        m_Gameplay1_fastfalling = m_Gameplay1.FindAction("fast falling", throwIfNotFound: true);
+        m_Gameplay1_shoot = m_Gameplay1.FindAction("shoot", throwIfNotFound: true);
+        m_Gameplay1_passthrough = m_Gameplay1.FindAction("pass through", throwIfNotFound: true);
+        m_Gameplay1_reload = m_Gameplay1.FindAction("reload", throwIfNotFound: true);
+        m_Gameplay1_crouch = m_Gameplay1.FindAction("crouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -233,64 +233,64 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_aim;
-    private readonly InputAction m_Gameplay_walk;
-    private readonly InputAction m_Gameplay_jump;
-    private readonly InputAction m_Gameplay_fastfalling;
-    private readonly InputAction m_Gameplay_shoot;
-    private readonly InputAction m_Gameplay_passthrough;
-    private readonly InputAction m_Gameplay_reload;
-    private readonly InputAction m_Gameplay_crouch;
-    public struct GameplayActions
+    // Gameplay1
+    private readonly InputActionMap m_Gameplay1;
+    private IGameplay1Actions m_Gameplay1ActionsCallbackInterface;
+    private readonly InputAction m_Gameplay1_aim;
+    private readonly InputAction m_Gameplay1_walk;
+    private readonly InputAction m_Gameplay1_jump;
+    private readonly InputAction m_Gameplay1_fastfalling;
+    private readonly InputAction m_Gameplay1_shoot;
+    private readonly InputAction m_Gameplay1_passthrough;
+    private readonly InputAction m_Gameplay1_reload;
+    private readonly InputAction m_Gameplay1_crouch;
+    public struct Gameplay1Actions
     {
         private @PlayerControl m_Wrapper;
-        public GameplayActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
-        public InputAction @aim => m_Wrapper.m_Gameplay_aim;
-        public InputAction @walk => m_Wrapper.m_Gameplay_walk;
-        public InputAction @jump => m_Wrapper.m_Gameplay_jump;
-        public InputAction @fastfalling => m_Wrapper.m_Gameplay_fastfalling;
-        public InputAction @shoot => m_Wrapper.m_Gameplay_shoot;
-        public InputAction @passthrough => m_Wrapper.m_Gameplay_passthrough;
-        public InputAction @reload => m_Wrapper.m_Gameplay_reload;
-        public InputAction @crouch => m_Wrapper.m_Gameplay_crouch;
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+        public Gameplay1Actions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @aim => m_Wrapper.m_Gameplay1_aim;
+        public InputAction @walk => m_Wrapper.m_Gameplay1_walk;
+        public InputAction @jump => m_Wrapper.m_Gameplay1_jump;
+        public InputAction @fastfalling => m_Wrapper.m_Gameplay1_fastfalling;
+        public InputAction @shoot => m_Wrapper.m_Gameplay1_shoot;
+        public InputAction @passthrough => m_Wrapper.m_Gameplay1_passthrough;
+        public InputAction @reload => m_Wrapper.m_Gameplay1_reload;
+        public InputAction @crouch => m_Wrapper.m_Gameplay1_crouch;
+        public InputActionMap Get() { return m_Wrapper.m_Gameplay1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
-        public void SetCallbacks(IGameplayActions instance)
+        public static implicit operator InputActionMap(Gameplay1Actions set) { return set.Get(); }
+        public void SetCallbacks(IGameplay1Actions instance)
         {
-            if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
+            if (m_Wrapper.m_Gameplay1ActionsCallbackInterface != null)
             {
-                @aim.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
-                @aim.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
-                @aim.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAim;
-                @walk.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalk;
-                @walk.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalk;
-                @walk.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalk;
-                @jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
-                @jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
-                @jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
-                @fastfalling.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
-                @fastfalling.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
-                @fastfalling.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFastfalling;
-                @shoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
-                @shoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
-                @shoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
-                @passthrough.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
-                @passthrough.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
-                @passthrough.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPassthrough;
-                @reload.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
-                @reload.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
-                @reload.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
-                @crouch.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCrouch;
-                @crouch.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCrouch;
-                @crouch.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCrouch;
+                @aim.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnAim;
+                @aim.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnAim;
+                @aim.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnAim;
+                @walk.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnWalk;
+                @walk.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnWalk;
+                @walk.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnWalk;
+                @jump.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnJump;
+                @jump.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnJump;
+                @jump.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnJump;
+                @fastfalling.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnFastfalling;
+                @fastfalling.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnFastfalling;
+                @fastfalling.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnFastfalling;
+                @shoot.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnShoot;
+                @shoot.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnShoot;
+                @shoot.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnShoot;
+                @passthrough.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnPassthrough;
+                @passthrough.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnPassthrough;
+                @passthrough.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnPassthrough;
+                @reload.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnReload;
+                @reload.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnReload;
+                @reload.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnReload;
+                @crouch.started -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnCrouch;
+                @crouch.performed -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnCrouch;
+                @crouch.canceled -= m_Wrapper.m_Gameplay1ActionsCallbackInterface.OnCrouch;
             }
-            m_Wrapper.m_GameplayActionsCallbackInterface = instance;
+            m_Wrapper.m_Gameplay1ActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @aim.started += instance.OnAim;
@@ -320,8 +320,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
             }
         }
     }
-    public GameplayActions @Gameplay => new GameplayActions(this);
-    public interface IGameplayActions
+    public Gameplay1Actions @Gameplay1 => new Gameplay1Actions(this);
+    public interface IGameplay1Actions
     {
         void OnAim(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
