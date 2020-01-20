@@ -442,6 +442,7 @@ MonoBehaviour:
   knockbackForce: 8
   heightModifier: 5
   cooldownTimer: 0.3
+  deadZone: 0.3
   reloadColdownTimer: 2
 --- !u!136 &1478808166445335574
 CapsuleCollider:
