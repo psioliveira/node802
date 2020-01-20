@@ -13,16 +13,10 @@ public class Aim : MonoBehaviour
     public float speed;
     public Camera cam;
     public GameObject aim;
-    Vector2 axis;
 
     private void Awake()
     {
         pc = new PlayerControl();
-    }
-
-    private void OnAim(InputValue ctx)
-    {
-        axis = ctx.Get<Vector2>();
     }
     void Start()
     {
@@ -35,7 +29,7 @@ public class Aim : MonoBehaviour
     }
     void AimCursor()
     {
-        if (axis.x == 0f && axis.y == 0f)
+        if (GetComponentInParent<CharacterMovement>().aimv.x == 0f && GetComponentInParent<CharacterMovement>().aimv.y == 0f)
         {
             Vector3 curRot = pivotPoint.transform.localEulerAngles;
             Vector3 homeRot;
@@ -51,7 +45,7 @@ public class Aim : MonoBehaviour
         }
         else
         {
-            pivotPoint.transform.localEulerAngles = new Vector3(Mathf.Atan2(-axis.y, axis.x) * 180 / Mathf.PI, 0f, 0f); // this does the actual rotaion according to inputs
+            pivotPoint.transform.localEulerAngles = new Vector3(Mathf.Atan2(-GetComponentInParent<CharacterMovement>().aimv.y, GetComponentInParent<CharacterMovement>().aimv.x) * 180 / Mathf.PI, 0f, 0f); // this does the actual rotaion according to inputs
         }
     }
 }

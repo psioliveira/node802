@@ -33,6 +33,7 @@ public class CharacterMovement : MonoBehaviour
     private GameObject[] OtherPlayer;
 
     internal Vector2 movement;
+    internal Vector2 aimv;
     internal Vector3 motion = Vector3.zero;
 
     private bool _jump = false;
@@ -72,6 +73,12 @@ public class CharacterMovement : MonoBehaviour
         }
 
     }
+
+    private void OnAim(InputValue ctx)
+    {
+        aimv = ctx.Get<Vector2>();
+    }
+
     private void OnWalk(InputValue value)
     {
         movement = value.Get<Vector2>();
