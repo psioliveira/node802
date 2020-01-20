@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivotPoint: {fileID: 1478808167520473576}
+  pi: {fileID: 0}
   speed: 500
   cam: {fileID: 1478808166204576899}
   aim: {fileID: 1478808165553209673}
@@ -206,7 +207,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 791
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 6259be59503e1084f99230f7099bf68a, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 4d382f332b3f29e4cb8c34a054ceb136, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -312,8 +313,8 @@ GameObject:
   - component: {fileID: 1478808166445335574}
   - component: {fileID: 5627629763023710676}
   m_Layer: 0
-  m_Name: Player
-  m_TagString: Player
+  m_Name: Player 2
+  m_TagString: Player2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -327,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 1478808166445335575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children:
   - {fileID: 1478808167520473579}
   - {fileID: 1478808166204576898}
@@ -429,6 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23be3d91b9a65a64a84e6fc2932eb433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player1: 0
   ui: {fileID: 0}
   jumpAcceleration: 500
   _physicObject: {fileID: 0}
@@ -436,11 +438,11 @@ MonoBehaviour:
   shoot: {fileID: 1478808167172401104}
   accelerationFactor: 300
   aim: {fileID: 1478808165553209672}
-  PlayerNumber: 1
+  OtherPlayer: {fileID: 0}
   knockbackForce: 8
   heightModifier: 5
   cooldownTimer: 0.3
-  reloadColdownTimer: 0.7
+  reloadColdownTimer: 2
 --- !u!136 &1478808166445335574
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -552,8 +554,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d9d4b98d3c5bbe24d8524526e585f47e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 40a305fa44f047a48a3394ae532d96ce, type: 3}
+  m_Color: {r: 1, g: 0.42356968, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -574,7 +576,7 @@ GameObject:
   - component: {fileID: 1478808166816151645}
   - component: {fileID: 1478808166816151644}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Locator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -607,6 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626d1bd261cd32243b0a2f5674f9a45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isplayer1: 0
   ui: {fileID: 0}
 --- !u!1 &1478808167172401104
 GameObject:

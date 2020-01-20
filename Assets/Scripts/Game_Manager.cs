@@ -12,11 +12,19 @@ public class Game_Manager : MonoBehaviour
     [SerializeField]
     private GameObject playerPrefab2;
 
+    [SerializeField]
+    private Transform player1Spawn;
+
+    [SerializeField]
+    private Transform player2Spawn;
+
     private void Start()
     {
 
         PlayerInput.Instantiate(playerPrefab1, 0, "KeyboardLeft", 0, Keyboard.current);
+        GameObject.FindGameObjectWithTag("Player1").transform.position = player1Spawn.position;
         PlayerInput.Instantiate(playerPrefab2, 1, "KeyboardRight", 1);
+        GameObject.FindGameObjectWithTag("Player2").transform.position = player2Spawn.position;
     }
 
     public bool CheckPlayer(int player)

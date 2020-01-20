@@ -7,7 +7,7 @@ public class Rotation_Receiver : MonoBehaviour
 {
 
     private Quaternion childRotation;
-    private int state = 2;
+    private int state = 1;
     private RectTransform me;
     Vector3 currentVector;
     Animator animMe;
@@ -17,12 +17,17 @@ public class Rotation_Receiver : MonoBehaviour
 
     private int previousLocation = 0;
 
+    private void Awake()
+    {
+        childRotation = leftChild.transform.rotation;
+
+        currentVector = transform.localRotation.eulerAngles;
+    }
+
     private void Start()
     {
         animMe = GetComponent<Animator>();
-        childRotation = leftChild.transform.rotation;
         me = GetComponent<RectTransform>();
-        currentVector = transform.localRotation.eulerAngles;
         animMe.SetInteger("State", state);
     }
 
@@ -40,7 +45,7 @@ public class Rotation_Receiver : MonoBehaviour
 
         if (state == 0)
         {
-            if (currentRotation > 1.6f)
+            if (currentRotation > 1.5f)
             {
                 Debug.Log("HEY1");
                 state = 3;
@@ -48,7 +53,7 @@ public class Rotation_Receiver : MonoBehaviour
                 //StopAllCoroutines();
                 //StartCoroutine(RotateTo());
             }
-            else if (currentRotation < 0.4f)
+            else if (currentRotation < 0.5f)
             {
                 Debug.Log("HEY2");
                 state = 1;
@@ -59,7 +64,7 @@ public class Rotation_Receiver : MonoBehaviour
         }
         else if (state == 1)
         {
-            if (currentRotation >= 1.1f && currentRotation <= 1.5f)
+            if (currentRotation >= 1.0f && currentRotation <= 1.5f)
             {
                 Debug.Log("HEY3");
                 state = 0;
@@ -67,7 +72,7 @@ public class Rotation_Receiver : MonoBehaviour
                 //StopAllCoroutines();
                 //StartCoroutine(RotateTo());
             }
-            else if (currentRotation <= 1.9f && currentRotation > 1.5f)
+            else if (currentRotation <= 2f && currentRotation >= 1.5f)
             {
                 Debug.Log("HEY4");
                 state = 2;
@@ -78,7 +83,7 @@ public class Rotation_Receiver : MonoBehaviour
         }
         else if (state == 2)
         {
-            if (currentRotation >= 0.6f && currentRotation < 1f)
+            if (currentRotation > 0.5f && currentRotation < 1f)
             {
                 Debug.Log("HEY5");
                 state = 1;
@@ -86,7 +91,7 @@ public class Rotation_Receiver : MonoBehaviour
                 //StopAllCoroutines();
                 //StartCoroutine(RotateTo());
             }
-            else if (currentRotation <= 1.6f && currentRotation > 1f)
+            else if (currentRotation < 1.5f && currentRotation > 1f)
             {
                 Debug.Log("HEY6");
                 state = 3;
@@ -97,7 +102,7 @@ public class Rotation_Receiver : MonoBehaviour
         }
         else if (state == 3)
         {
-            if (currentRotation <= 0.9f && currentRotation >= 0.5F)
+            if (currentRotation <= 1f && currentRotation > 0.5F)
             {
                 Debug.Log("HEY7");
                 state = 0;
@@ -105,7 +110,7 @@ public class Rotation_Receiver : MonoBehaviour
                 //StopAllCoroutines();
                 //StartCoroutine(RotateTo());
             }
-            else if (currentRotation >= 0.1f && currentRotation < 0.5f)
+            else if (currentRotation >= 0f && currentRotation < 0.5f)
             {
                 Debug.Log("HEY8");
                 state = 2;

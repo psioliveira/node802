@@ -72,7 +72,7 @@ public class UI_HealthBar_Player : MonoBehaviour
 
     internal void SetPlayer(int number)
     {
-        player = number;
+        player = 0;
         MainHP.fillAmount = (float)CurrentHP / (float)MaxHP;
         CheckState(CurrentHP);
     }

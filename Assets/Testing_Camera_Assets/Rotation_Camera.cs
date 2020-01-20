@@ -28,7 +28,7 @@ public class Rotation_Camera : MonoBehaviour
     /// <summary>
     /// Starting state = 0 rotates clock wise.
     /// </summary>
-    private int state = 0;
+    private int state = 1;
     /// <summary>
     /// Starting location = 0 rotates clock wise.
     /// </summary>
@@ -61,6 +61,7 @@ public class Rotation_Camera : MonoBehaviour
         }
 
         Debug.Log(interpolate[1]);
+        StartCoroutine(RotateTo());
     }
 
     internal void Rotate(float rotation)
@@ -80,14 +81,14 @@ public class Rotation_Camera : MonoBehaviour
 
         if (state == 0)
         {
-            if (progress > 1.6f)
+            if (progress > 1.5f)
             {
                 previousLocation = 0;
                 state = 3;
                 StopAllCoroutines();
                 StartCoroutine(RotateTo());
             }
-            else if (progress < 0.4f)
+            else if (progress < 0.5f)
             {
                 previousLocation = 0;
                 state = 1;
@@ -97,14 +98,14 @@ public class Rotation_Camera : MonoBehaviour
         }
         else if(state == 1)
         {
-            if (progress >= 1.1f && progress <= 1.5f)
+            if (progress >= 1.0f && progress <= 1.5f)
             {
                 previousLocation = 1;
                 state = 0;
                 StopAllCoroutines();
                 StartCoroutine(RotateTo());
             }
-            else if(progress <= 1.9f && progress > 1.5f)
+            else if(progress <= 2f && progress >= 1.5f)
             {
                 previousLocation = 1;
                 state = 2;
@@ -114,14 +115,14 @@ public class Rotation_Camera : MonoBehaviour
         }
         else if(state == 2)
         {
-            if (progress >= 0.6f && progress < 1f)
+            if (progress > 0.5f && progress < 1f)
             {
                 previousLocation = 2;
                 state = 1;
                 StopAllCoroutines();
                 StartCoroutine(RotateTo());
             }
-            else if(progress <= 1.6f && progress > 1f)
+            else if(progress < 1.5f && progress > 1f)
             {
                 previousLocation = 2;
                 state = 3;
@@ -131,14 +132,14 @@ public class Rotation_Camera : MonoBehaviour
         }
         else if (state == 3)
         {
-            if (progress <= 0.9f && progress >= 0.5F)
+            if (progress <= 1f && progress >= 0.5F)
             {
                 previousLocation = 3;
                 state = 0;
                 StopAllCoroutines();
                 StartCoroutine(RotateTo());
             }
-            else if (progress >= 0.1f && progress < 0.5f)
+            else if (progress >= 0f && progress <= 0.5f)
             {
                 previousLocation = 3;
                 state = 2;
@@ -174,6 +175,13 @@ public class Rotation_Camera : MonoBehaviour
         float ratio = desiredTimer / 2;
         if(state == 0)
         {
+            if(previousLocation == 0)
+            {
+                Vector3 temp1 = Vector3.Lerp(locations[0], interpolate[0], 0);
+                Vector3 temp2 = Vector3.Lerp(interpolate[0], locations[1], 0);
+                me.position = Vector3.Lerp(temp1, temp2, 0);
+                Safety = me.position;
+            }
             // ood
             if (previousLocation == 1)
             {

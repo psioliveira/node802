@@ -5,6 +5,8 @@ using UnityEngine;
 public class LocatePlayer : MonoBehaviour
 {
     Transform partner;
+    [SerializeField]
+    bool isplayer1 = false;
 
     [SerializeField]
     Rotation_Receiver ui;
@@ -17,7 +19,10 @@ public class LocatePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if (isplayer1)
+        {
+            ui = GameObject.FindGameObjectWithTag("UI_Rotation").GetComponent<Rotation_Receiver>();
+        }
 
         GameObject[] playerArray;
         Transform father = GetComponentInParent<Transform>();
@@ -31,27 +36,36 @@ public class LocatePlayer : MonoBehaviour
                 i = 10000;
             }
         }
-        Vector3 temp = partner.position;
-
-        temp.x = 0;
-        transform.LookAt(temp);
     }
 
     private void FixedUpdate()
     {
         //if (counter >= (float)maxCounter)
         //{
+        if(partner == null)
+        {
+            if (isplayer1)
+                partner = GameObject.FindGameObjectWithTag("Player2").transform;
+            else
+                partner =  GameObject.FindGameObjectWithTag("Player1").transform;
+        }
+        float rotationX = 0;
+        if(partner != null)
+        {
+            Vector3 difference = partner.position - transform.position;
+            rotationX = Mathf.Atan2(difference.y, difference.z) * Mathf.Rad2Deg;
+            rotationX = Mathf.Round(rotationX);
+            transform.rotation = Quaternion.Euler(-rotationX, 0.0f, 0f);
+            if (isplayer1)
+                ui.ChangeRotation(transform.rotation, rotationX);
+        }
 
-        Vector3 difference = partner.position - transform.position;
-        float rotationX = Mathf.Atan2(difference.y, difference.z) * Mathf.Rad2Deg;
-        rotationX = Mathf.Round(rotationX);
-        transform.rotation = Quaternion.Euler(-rotationX, 0.0f, 0f);
 
 
 
 
         //transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, 0);
-        ui.ChangeRotation(transform.rotation, rotationX);
+
         //counter = 0f;
         //}
 

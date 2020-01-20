@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Game_Manager
   - Shot
+  - Player2UI
+  - Player1UI
+  - UI_Rotation
+  - Player2
+  - Player1
+  - Ground
   layers:
   - Default
   - TransparentFX

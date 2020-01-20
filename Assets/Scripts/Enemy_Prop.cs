@@ -8,6 +8,12 @@ public class Enemy_Prop : MonoBehaviour
     Animator anim;
     Collider myhitbox;
 
+    [SerializeField]
+    Animator reactant;
+
+    [SerializeField]
+    Material usedUp;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -19,8 +25,9 @@ public class Enemy_Prop : MonoBehaviour
     {
         if(other.tag == "Shot")
         {
+            GetComponent<Renderer>().material = usedUp;
             anim.SetTrigger("Hurt");
-            myhitbox.enabled = false;
+            reactant.SetTrigger("Go");
         }
     }
 }

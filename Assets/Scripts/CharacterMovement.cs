@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField]
+    private bool player1 = false;
+
+    [SerializeField]
     private PlayerControl playerControl;
 
     [SerializeField]
@@ -30,7 +33,7 @@ public class CharacterMovement : MonoBehaviour
     private Transform aim;
 
     [SerializeField]
-    private GameObject[] OtherPlayer;
+    private GameObject OtherPlayer;
 
     internal Vector2 movement;
     internal Vector2 aimv;
@@ -55,22 +58,22 @@ public class CharacterMovement : MonoBehaviour
 
     private bool reloading = false;
     [SerializeField]
-    private float reloadColdownTimer = 1;
+    private float reloadColdownTimer = 3;
     private float reloadCooldownCurrent = 0;
     private void Awake()
     {
         shoot.SetActive(false);
         playerControl = new PlayerControl();
+
     }
     private void Start()
     {
         _physicObject = GetComponent<PhysicObject>();
         _rigidbody = GetComponent<Rigidbody>();
-        OtherPlayer = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject g in OtherPlayer)
-        {
-            Physics.IgnoreCollision(g.GetComponent<Collider>(), GetComponent<Collider>());
-        }
+        OtherPlayer = GameObject.FindGameObjectWithTag("Player1");
+        Physics.IgnoreCollision(OtherPlayer.GetComponent<Collider>(), GetComponent<Collider>());
+        OtherPlayer = GameObject.FindGameObjectWithTag("Player2");
+        Physics.IgnoreCollision(OtherPlayer.GetComponent<Collider>(), GetComponent<Collider>());
 
     }
 
@@ -114,7 +117,7 @@ public class CharacterMovement : MonoBehaviour
 
     }
 
-
+   
 
     private void Update()
     {
@@ -156,6 +159,17 @@ public class CharacterMovement : MonoBehaviour
         UpdateKnockback();
         UpdateAcceleration();
         UpdatePosition();
+        if (ui == null)
+        {
+            if (player1)
+            {
+                ui = GameObject.FindGameObjectWithTag("Player1UI").transform.GetChild(0).GetComponent<UI_Player_Manager>();
+            }
+            else
+            {
+                ui = GameObject.FindGameObjectWithTag("Player2UI").transform.GetChild(0).GetComponent<UI_Player_Manager>();
+            }
+        }
     }
 
     private void UpdateAcceleration()
@@ -182,7 +196,7 @@ public class CharacterMovement : MonoBehaviour
         {
             if (_shoot)
             {
-                //  ui.UseShell();
+                ui.UseShell();
                 _shoot = false;
                 shootCount += 1;
                 cooldownReached = false;
