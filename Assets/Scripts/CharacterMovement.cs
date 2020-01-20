@@ -108,6 +108,7 @@ public class CharacterMovement : MonoBehaviour
     private void OnReaload()
     {
         shootCount = 3;
+
     }
 
     private void OnCrouch()
@@ -204,7 +205,7 @@ public class CharacterMovement : MonoBehaviour
                 shootCount += 1;
                 cooldownReached = false;
                 cooldownCurrent = 0f;
-                Vector3 velocity = Vector3.zero;
+                _rigidbody.velocity = Vector3.zero;
 
                 Vector3 _knockbackDirection = (transform.position - aim.position).normalized;
                 _rigidbody.AddForce(_knockbackDirection * 100f * knockbackForce, ForceMode.Impulse);

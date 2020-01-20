@@ -195,12 +195,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer: Ground
   gravityFactor: 1.5
-  groundOfset: 3.55
-  groundCheckRadius: 2
-  platformOfset: 5.18
-  playerHeadOfset: -3.33
-  platformCheckRadius: 0.66
-  headCheckRadius: 2.1
+  groundOfset: 4.46
+  groundCheckRadius: 3.89
+  platformOfset: 7.75
+  playerHeadOfset: -4.37
+  platformCheckRadius: 0.41
+  headCheckRadius: 3.93
 --- !u!114 &3040803091631375235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +234,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3040803091631375237}
-  m_Material: {fileID: 13400000, guid: e63d62b9678fee249a7a8d7364ffbfcf, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
